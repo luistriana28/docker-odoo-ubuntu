@@ -52,6 +52,6 @@ RUN chmod 755 /etc/logrotate.d/odoo-server
 RUN mkdir -p /var/log/odoo && \
     chown odoo:root /var/log/odoo
 VOLUME ["/home/odoo/", "/var/log/odoo"]
-USER ODOO
+USER odoo
 CMD /entrypoint.sh
 EXPOSE 8069 8072
