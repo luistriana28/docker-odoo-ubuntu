@@ -11,14 +11,13 @@ RUN ln -s /usr/share/i18n/SUPPORTED /var/lib/locales/supported.d/all \
     && locale-gen
 ENV PYTHONIOENCODING utf-8
 ENV TERM xterm
-RUN apt-get install aptitude
-RUN aptitude update -q && aptitude safe-upgrade -q && \
-    aptitude install --allow-unauthenticated -q
+RUN apt-get update -q && apt-get safe-upgrade -q && \
+    apt-get install --allow-unauthenticated -q
 RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc/apt/sources.list.d/pgdg.list && \
     wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
     sudo apt-key add -
-RUN aptitude update -q && aptitude safe-upgrade -q && \
-    aptitude install --allow-unauthenticated -q \
+RUN apt-get update -q && apt-get safe-upgrade -q && \
+    apt-get install --allow-unauthenticated -q \
     fontconfig \
     libevent-dev \
     libjpeg-dev \
