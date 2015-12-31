@@ -47,6 +47,7 @@ RUN adduser --home=/home/odoo --disabled-password --gecos "" --shell=/bin/bash o
 RUN echo 'root:odoo' |chpasswd
 ADD files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN apt-get install openssh-server
 ADD files/logrotate /etc/logrotate.d/odoo-server
 RUN chmod 755 /etc/logrotate.d/odoo-server
 RUN mkdir -p /var/log/odoo && \
