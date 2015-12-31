@@ -30,6 +30,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libxrender1 \
     libxslt-dev \
     nano \
+    openssh-server \
     npm \
     postgresql-server-dev-9.4 \
     python \
@@ -52,6 +53,7 @@ RUN chmod 755 /etc/logrotate.d/odoo-server
 RUN mkdir -p /var/log/odoo && \
     chown odoo:root /var/log/odoo
 VOLUME ["/home/odoo/", "/var/log/odoo"]
+CMD /etc/init.d/ssh start
 USER odoo
 CMD /entrypoint.sh
-EXPOSE 8069 8072
+EXPOSE 8069 8072 22
