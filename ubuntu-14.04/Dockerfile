@@ -30,6 +30,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libxrender1 \
     libxslt-dev \
     nano \
+    openssh-server \
     npm \
     postgresql-server-dev-9.4 \
     python \
@@ -47,7 +48,6 @@ RUN adduser --home=/home/odoo --disabled-password --gecos "" --shell=/bin/bash o
 RUN echo 'root:odoo' |chpasswd
 ADD files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-RUN apt-get install openssh-server
 ADD files/logrotate /etc/logrotate.d/odoo-server
 RUN chmod 755 /etc/logrotate.d/odoo-server
 RUN mkdir -p /var/log/odoo && \
