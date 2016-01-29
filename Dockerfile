@@ -41,7 +41,7 @@ RUN cd /tmp && wget -O wkhtmltox-0.12.1_linux-trusty-amd64.deb http://download.g
     && dpkg -i wkhtmltox-0.12.1_linux-trusty-amd64.deb
 RUN ln -s /usr/bin/nodejs /usr/bin/node
 RUN npm install -g less less-plugin-clean-css
-RUN cd /tmp && wget -q https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py && python get-pip.py
+RUN cd /tmp && wget -q https://bootstrap.pypa.io/get-pip.py && python get-pip.py
 RUN cd /tmp && wget -q https://raw.githubusercontent.com/odoo/odoo/9.0/requirements.txt && pip install -r requirements.txt
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
 
