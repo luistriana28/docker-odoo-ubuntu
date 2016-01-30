@@ -1,6 +1,8 @@
 #!/bin/bash
-mkdir -p /home/odoo/.local/share/Odoo/filestore
-chown -r odoo /home/odoo
-/home/odoo/odoo/odoo.py \
--c /home/odoo/odoo-server.conf
-exec "$@"
+/opt/odoo/8.0/odoo.py \
+-c /opt/odoo/odoo-server.conf \
+--db_user=$DB_ENV_POSTGRES_USER \
+--db_password=$DB_ENV_POSTGRES_PASSWORD \
+--db_host=$DB_PORT_5432_TCP_ADDR \
+
+exec "$@
