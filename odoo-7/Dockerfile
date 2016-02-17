@@ -61,7 +61,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     python-werkzeug \
     python-xlwt \
     python-yaml \
-    python-zbar
+    python-zbar \
     python-zsi \
     qrencode \
     xmlstarlet \ 
