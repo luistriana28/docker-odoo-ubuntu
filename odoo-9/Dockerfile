@@ -15,12 +15,6 @@ ENV TERM xterm
 #Install Odoo dependencies
 RUN apt-get update -q && apt-get upgrade -q && \
     apt-get install --allow-unauthenticated -q \
-    wget
-RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc/apt/sources.list.d/pgdg.list && \
-    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
-    sudo apt-key add -
-RUN apt-get update -q && apt-get upgrade -q && \
-    apt-get install --allow-unauthenticated -q \
     fontconfig \
     libevent-dev \
     libjpeg-dev \
@@ -33,7 +27,6 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libxslt-dev \
     nano \
     npm \
-    postgresql-server-dev-9.4 \
     python \
     python-dev \
     xfonts-75dpi \
