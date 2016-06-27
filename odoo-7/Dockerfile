@@ -66,6 +66,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     qrencode \
     xmlstarlet \ 
     xsltproc \
+    wget \
     zbar-tools 
 
 #Install gdata dependency
