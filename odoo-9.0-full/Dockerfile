@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-MAINTAINER Luis Triana <luis.triana@jarsa.com.mx>
+MAINTAINER LuisTriana <luis.triana@jarsa.com.mx>
 
 RUN echo 'APT::Get::Assume-Yes "true";' >> /etc/apt/apt.conf \
     && echo 'APT::Get::force-yes "true";' >> /etc/apt/apt.conf
@@ -15,6 +15,12 @@ ENV TERM xterm
 #Install Odoo dependencies
 RUN apt-get update -q && apt-get upgrade -q && \
     apt-get install --allow-unauthenticated -q \
+    wget
+RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc/apt/sources.list.d/pgdg.list && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | \
+    sudo apt-key add -
+RUN apt-get update -q && apt-get upgrade -q && \
+    apt-get install --allow-unauthenticated -q \
     fontconfig \
     libevent-dev \
     libjpeg-dev \
@@ -27,11 +33,19 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libxslt-dev \
     nano \
     npm \
+    postgresql-server-dev-9.4 \
+    postgresql-9.4 \
+    postgresql-client-9.4 \
+    postgresql-contrib-9.4 \
+    supervisor \
+    python-software-properties \
+    software-properties-common \
+    postgresql-common \
+    python-psycopg2 \
     python \
     python-dev \
     xfonts-75dpi \
-    xfonts-base \
-    wget
+    xfonts-base
 # Install wkhtmltopdf
 RUN cd /tmp && \
     wget -O wkhtmltox-0.12.1_linux-trusty-amd64.deb http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
@@ -59,6 +73,11 @@ RUN echo 'root:odoo' |chpasswd
 # Create entrypoint
 ADD files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN chown -R odoo:odoo /entrypoint.sh
+
+# Create odoo-server.conf
+ADD files/odoo-server.conf /opt/odoo/odoo-server.conf
+RUN chmod +x /odoo-serve.conf
 
 # Add Logrotate file
 ADD files/logrotate /etc/logrotate.d/odoo-server
