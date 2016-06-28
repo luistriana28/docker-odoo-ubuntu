@@ -21,7 +21,10 @@ RUN echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc
     sudo apt-key add -
 RUN apt-get update -q && apt-get upgrade -q && \
     apt-get install --allow-unauthenticated -q \
+    antiword \
+    bash-completion \
     fontconfig \
+    git \
     libevent-dev \
     libjpeg-dev \
     libldap2-dev \
@@ -46,6 +49,18 @@ RUN apt-get update -q && apt-get upgrade -q && \
     python-dev \
     xfonts-75dpi \
     xfonts-base
+    openssl \
+    python \
+    python-dev \
+    python-imaging \
+    python-libxml2 \
+    python-pandas \
+    python-qrtools \
+    xfonts-75dpi \
+    xfonts-base \
+    swig \
+    xmlstarlet \
+    xsltproc 
 # Install wkhtmltopdf
 RUN cd /tmp && \
     wget -O wkhtmltox-0.12.1_linux-trusty-amd64.deb http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
@@ -59,6 +74,9 @@ RUN ln -s /usr/bin/nodejs /usr/bin/node && \
 RUN cd /tmp && \
     wget -q https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py
+
+# Install external pip dependencies
+RUN pip install  SOAPpy suds xmltodict simplejson M2Crypto
 
 # Download and install odoo requirements from github.com/odoo/odoo/requirements.txt
 RUN cd /tmp && wget -q https://raw.githubusercontent.com/odoo/odoo/9.0/requirements.txt && pip install -r requirements.txt
@@ -79,6 +97,11 @@ RUN chown -R odoo:odoo /entrypoint.sh
 ADD files/odoo-server.conf /opt/odoo/odoo-server.conf
 RUN chmod +x /odoo-serve.conf
 
+# Create odoo-server.conf
+RUN mkdir -p /opt/odoo
+ADD files/odoo-server.conf /odoo-sever.conf
+
+
 # Add Logrotate file
 ADD files/logrotate /etc/logrotate.d/odoo-server
 RUN chmod 755 /etc/logrotate.d/odoo-server
@@ -91,7 +114,7 @@ RUN mkdir -p /var/log/odoo && \
 RUN /bin/bash -c "mkdir -p /home/odoo/filestorage"
 RUN chown odoo /home/odoo/filestorage
 
-VOLUME ["/opt/odoo/", "/var/log/odoo", "/home/odoo/filestorage"]
+VOLUME ["opt/odoo", "/var/log/odoo", "/home/odoo/filestorage"]
 
 RUN echo $'#!/bin/bash\nchown -R odoo:odoo /opt/odoo && chmod 640 /opt/odoo/odoo-server.conf' > /permission.sh && chmod +x /permission.sh
 CMD /permission.sh
