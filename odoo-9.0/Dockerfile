@@ -20,6 +20,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libjpeg-dev \
     libldap2-dev \
     libsasl2-dev \
+    libpq-dev \
     libx11-6 \
     libxext6 \
     libxml2-dev \
@@ -27,11 +28,21 @@ RUN apt-get update -q && apt-get upgrade -q && \
     libxslt-dev \
     nano \
     npm \
+    openssl \
     python \
     python-dev \
+    python-imaging \
+    python-libxml2 \
+    python-pandas \
+    python-psycopg2 \
     xfonts-75dpi \
     xfonts-base \
+    python-qrtools \
+    swig \
+    xmlstarlet \
+    xsltproc \
     wget
+
 # Install wkhtmltopdf
 RUN cd /tmp && \
     wget -O wkhtmltox-0.12.1_linux-trusty-amd64.deb http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-trusty-amd64.deb && \
@@ -46,8 +57,12 @@ RUN cd /tmp && \
     wget -q https://bootstrap.pypa.io/get-pip.py && \
     python get-pip.py
 
+RUN pip install SOAPpy suds xmltodict simplejson M2Crypto
+
 # Download and install odoo requirements from github.com/odoo/odoo/requirements.txt
-RUN cd /tmp && wget -q https://raw.githubusercontent.com/odoo/odoo/9.0/requirements.txt && pip install -r requirements.txt
+RUN cd /tmp && \
+    wget -q https://raw.githubusercontent.com/odoo/odoo/9.0/requirements.txt && \
+    pip install -r requirements.txt
 
 # Cleanup
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* && rm -rf /tmp/*
