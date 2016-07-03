@@ -15,6 +15,7 @@ ENV TERM xterm
 #Install Odoo dependencies
 RUN apt-get update -q && apt-get upgrade -q && \
     apt-get install --allow-unauthenticated -q \
+    build-essential \
     fontconfig \
     libevent-dev \
     libjpeg-dev \
@@ -31,6 +32,7 @@ RUN apt-get update -q && apt-get upgrade -q && \
     openssl \
     python \
     python-dev \
+    python-pip \
     python-imaging \
     python-libxml2 \
     python-pandas \
@@ -51,11 +53,6 @@ RUN cd /tmp && \
 # Install nodejs
 RUN ln -s /usr/bin/nodejs /usr/bin/node && \
     npm install -g less less-plugin-clean-css
-
-# Install pip
-RUN cd /tmp && \
-    wget -q https://bootstrap.pypa.io/get-pip.py && \
-    python get-pip.py
 
 RUN pip install SOAPpy suds xmltodict simplejson M2Crypto
 
